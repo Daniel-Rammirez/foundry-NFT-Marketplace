@@ -1737,8 +1737,8 @@
       }
     },
     "test/unit/DeployMarket.test.sol": {
-      "lastModificationDate": 1694560956247,
-      "contentHash": "2ff209d6c56b6ed37430e7cd7ec66364",
+      "lastModificationDate": 1694606154006,
+      "contentHash": "001b89a1e5595729b0fb440d412f9198",
       "sourceName": "test/unit/DeployMarket.test.sol",
       "solcConfig": {
         "settings": {
