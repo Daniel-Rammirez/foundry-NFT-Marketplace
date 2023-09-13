@@ -60,7 +60,7 @@ contract DeployMoodNftTest is Test {
         // check:
         // itemCount
         // transferFrom
-        //mappgin itemCount
+        // mappgin itemCount
         // event
         // rever if require fail
     }
