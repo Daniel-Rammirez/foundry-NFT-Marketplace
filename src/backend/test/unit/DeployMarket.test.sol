@@ -56,5 +56,12 @@ contract DeployMoodNftTest is Test {
         assert(marketplace.getTotalPrice(token_id) == expected_total_price);
     }
 
-    function testMakeItem() public {}
+    function testMakeItem() public {
+        // check:
+        // itemCount
+        // transferFrom
+        //mappgin itemCount
+        // event
+        // rever if require fail
+    }
 }
