@@ -13,6 +13,7 @@ contract DeployNFTMarketTest is Test {
     uint256 constant FEE_PERCENT = 1;
     uint256 constant FIRST_NFT_COUNT = 1;
     uint256 constant BALANCE_OF_FIRST_TRANSFER = 1;
+    uint256 constant INITIAL_BALANCE = 100 ether;
     NFT nft;
     Marketplace marketplace;
 
@@ -28,6 +29,7 @@ contract DeployNFTMarketTest is Test {
     // }
 
     address USER = makeAddr("user");
+    address USER2 = makeAddr("user2");
     string public constant URI =
         "{'image':'https://nmarketplace.infura-ipfs.io/ipfs/QmWknRXhFJoVLX6hXywpiSYTCojNwhV86CeJ2NendhntDu','price':'200','name':'Zoro','description':'El mejor espadachin de one piece'}";
 
@@ -113,5 +115,19 @@ contract DeployNFTMarketTest is Test {
         vm.expectRevert();
         marketplace.makeItem(IERC721(address(nft)), token_id, PRIZE_ZERO);
         vm.stopPrank();
+    }
+
+    function testRevertErrorItemDoesNotExist() public userMintAndMakeItem {
+        uint256 FAKE_ITEM_ID = 10;
+        vm.prank(USER2);
+        vm.expectRevert("item doesn't exist");
+        marketplace.purchaseItem(FAKE_ITEM_ID);
+    }
+
+    function testRevertErrorNotEnoughETH() public userMintAndMakeItem {
+        // vm.prank(USER2);
+        hoax(USER2, INITIAL_BALANCE); // prank but with a fund user
+        vm.expectRevert("not enough ether to cover item price and market fee");
+        marketplace.purchaseItem{value: 5 ether}(token_id);
     }
 }

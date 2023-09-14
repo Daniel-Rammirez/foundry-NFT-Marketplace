@@ -1737,8 +1737,8 @@
       }
     },
     "test/unit/DeployMarket.test.sol": {
-      "lastModificationDate": 1694606154006,
-      "contentHash": "001b89a1e5595729b0fb440d412f9198",
+      "lastModificationDate": 1694692373696,
+      "contentHash": "af3e27be303de633a132780f356672f8",
       "sourceName": "test/unit/DeployMarket.test.sol",
       "solcConfig": {
         "settings": {
@@ -1811,8 +1811,8 @@
       ],
       "versionRequirement": "^0.8.18",
       "artifacts": {
-        "DeployMoodNftTest": {
-          "0.8.20+commit.a1b79de6.Darwin.appleclang": "DeployMarket.test.sol/DeployMoodNftTest.json"
+        "DeployNFTMarketTest": {
+          "0.8.20+commit.a1b79de6.Darwin.appleclang": "DeployMarket.test.sol/DeployNFTMarketTest.json"
         }
       }
     }
