@@ -163,4 +163,26 @@ contract DeployNFTMarketTest is Test {
         assert(initialBalanceSeller - finalBalanceSeller == expected_total_price);
         assert(finalBalanceFeeAccount - initialBalanceFeeAccount == expected_total_price - initial_price);
     }
+
+    function testItemStatusFalseToTrue() public userMintAndMakeItem {
+        hoax(USER2, INITIAL_BALANCE); // prank but with a fund user
+        uint256 itemCount = marketplace.itemCount();
+        marketplace.purchaseItem{value: expected_total_price}(token_id);
+        (,,,,, bool sold) = marketplace.items(itemCount);
+        assert(sold == true);
+    }
+
+    function testSuccessTransferNFT() public userMintAndMakeItem {
+        uint256 expected_NFT_Balance = 1;
+        hoax(USER2, INITIAL_BALANCE); // prank but with a fund user
+        marketplace.purchaseItem{value: expected_total_price}(token_id);
+        assert(nft.balanceOf(USER2) == expected_NFT_Balance);
+    }
+
+    function testEmitingEventBought() public userMintAndMakeItem {
+        hoax(USER2, INITIAL_BALANCE); // prank but with a fund user
+        vm.expectEmit(true, true, true, false);
+        emit Bought(token_id, address(nft), token_id, expected_total_price, address(USER), address(USER2));
+        marketplace.purchaseItem{value: expected_total_price}(token_id);
+    }
 }
