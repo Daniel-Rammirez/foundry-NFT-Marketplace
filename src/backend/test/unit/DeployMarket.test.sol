@@ -19,6 +19,15 @@ contract DeployNFTMarketTest is Test {
 
     event Offered(uint256 itemId, address indexed nft, uint256 tokenId, uint256 price, address indexed seller);
 
+    event Bought(
+        uint256 itemId,
+        address indexed nft,
+        uint256 tokenId,
+        uint256 price,
+        address indexed seller,
+        address indexed buyer
+    );
+
     // struct Item {
     //     uint256 itemId;
     //     IERC721 nft;
@@ -129,5 +138,29 @@ contract DeployNFTMarketTest is Test {
         hoax(USER2, INITIAL_BALANCE); // prank but with a fund user
         vm.expectRevert("not enough ether to cover item price and market fee");
         marketplace.purchaseItem{value: 5 ether}(token_id);
+    }
+
+    function testRevertErrorItemSold() public userMintAndMakeItem {
+        hoax(USER2, INITIAL_BALANCE); // prank but with a fund user
+        marketplace.purchaseItem{value: expected_total_price}(token_id);
+        vm.prank(USER2);
+        vm.expectRevert("item already sold");
+        marketplace.purchaseItem{value: expected_total_price}(token_id);
+    }
+
+    function testBalancesAccountsSellerBuyerMarketpalce() public userMintAndMakeItem {
+        address FEE_ACCOUNT = marketplace.feeAccount();
+        hoax(USER2, INITIAL_BALANCE);
+        uint256 initialBalanceBuyer = USER.balance;
+        uint256 initialBalanceSeller = USER2.balance;
+        uint256 initialBalanceFeeAccount = FEE_ACCOUNT.balance;
+        marketplace.purchaseItem{value: expected_total_price}(token_id);
+        uint256 finalBalanceBuyer = USER.balance;
+        uint256 finalBalanceSeller = USER2.balance;
+        uint256 finalBalanceFeeAccount = FEE_ACCOUNT.balance;
+
+        assert(finalBalanceBuyer - initialBalanceBuyer == initial_price);
+        assert(initialBalanceSeller - finalBalanceSeller == expected_total_price);
+        assert(finalBalanceFeeAccount - initialBalanceFeeAccount == expected_total_price - initial_price);
     }
 }
