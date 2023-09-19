@@ -50,8 +50,6 @@ function saveFrontendFilesAddress(contractAddress, fileName) {
     contractsDir + `/${fileName}-address.json`,
     JSON.stringify({ address: contractAddress }, undefined, 2)
   );
-
-  // const contractArtifact = artifacts.readArtifactSync(name);
 }
 
 const saveFrontendFilesContract = (contractData, fileName) => {
