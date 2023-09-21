@@ -57,14 +57,14 @@ export function Home({ marketplace, nft }) {
   return (
     <div>
       {NFTs.length > 0 ? (
-        <ul>
+        <ul className="flex flex-row gap-4 mx-4 my-4">
           {NFTs.map((NFT) => {
             return (
               <li key={NFT.itemId}>
                 <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                   <div className="place-content-center item-center">
                     <img
-                      className="p-8 rounded-t-lg"
+                      className="p-8 rounded-t-lg object-contain h-96 w-96"
                       src={NFT.image}
                       alt={`image of ${NFT.name}`}
                     />
