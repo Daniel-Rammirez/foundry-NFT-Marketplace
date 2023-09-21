@@ -57,8 +57,9 @@ function App() {
     const nft = new ethers.Contract(NFTAddress.address, NFTAbi.abi, signer);
     setNft(nft);
     setloading(false);
-    console.log("funcionando", marketplace);
   };
+  // console.log("funcionando market ", marketplace);
+  // console.log("funcionando nft ", nft);
 
   return (
     <>
@@ -73,7 +74,10 @@ function App() {
             path="/"
             element={<Home marketplace={marketplace} nft={nft} />}
           />
-          <Route path="/Create" element={<Create />} />
+          <Route
+            path="/Create"
+            element={<Create marketplace={marketplace} nft={nft} />}
+          />
           <Route path="/Listings" element={<Listings />} />
           <Route path="/Purchases" element={<Purchases />} />
         </Routes>
