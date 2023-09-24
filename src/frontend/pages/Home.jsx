@@ -11,11 +11,11 @@ export function Home({ marketplace, nft }) {
   const loadMarketplaceItems = async () => {
     // Load all unsold items
     const itemCount = await marketplace.itemCount();
-    console.log(itemCount);
+    // console.log(itemCount);
     const items = [];
     for (let i = 1; i <= itemCount; i++) {
       const item = await marketplace.items(i);
-      console.log(item);
+      // console.log(item);
       if (!item.sold) {
         // Get URI URL from nft Contract
         const uri = await nft.tokenURI(item.tokenId);
@@ -49,7 +49,7 @@ export function Home({ marketplace, nft }) {
     ).wait();
     loadMarketplaceItems();
   };
-  console.log(NFTs);
+  // console.log(NFTs);
 
   useEffect(() => {
     loadMarketplaceItems();

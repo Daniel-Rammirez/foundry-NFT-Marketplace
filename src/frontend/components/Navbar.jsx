@@ -64,7 +64,7 @@ export function NavBar({ web3Handler, account }) {
         <div className="md:flex space-x-4 items-center p-2">
           {account ? (
             <NavLink
-              href={`https://etherscan.io/address/${account}`}
+              to={`https://etherscan.io/address/${account}`}
               target="_blank"
               rel="noopener noreferrer"
             >

@@ -7,7 +7,7 @@ const SoldItems = ({ soldNFT }) => {
     <div>
       <h2 className="text-2xl my-4">Sold Items</h2>
       {soldNFT.length > 0 ? (
-        <ListItems itemsArray={soldNFT} />
+        <ListItems itemsArray={soldNFT} sold={true} />
       ) : (
         <main style={{ padding: "1rem 0" }}>
           <h2>{"You don't have sold items yet"}</h2>
@@ -40,7 +40,7 @@ export function Listings({ marketplace, nft, account }) {
         const response = await fetch(nftUri);
         // Transform to json
         const metadata = await response.json();
-        // console.log(metadata);
+        // console.log("metadata ", metadata);
         // Get totalPrice
         const totalPrice = await marketplace.getTotalPrice(nftItem.itemId);
         // Create item and add it to array
@@ -49,7 +49,7 @@ export function Listings({ marketplace, nft, account }) {
           name: metadata.NFT_name,
           description: metadata.NFT_description,
           image: metadata.NFT_image,
-          price: metadata.price,
+          price: metadata.NFT_price,
           itemId: nftItem.itemId,
         };
         listedItems.push(item);
