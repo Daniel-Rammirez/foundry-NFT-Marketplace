@@ -38,10 +38,15 @@ export function Home({ marketplace, nft }) {
     setLoading(false);
     setNFTs(items);
   };
-  // console.log("NFTs", NFTs[0]);
-  // const hope = NFTs[0].totalPrice;
-  // console.log("Nfts ", hope.toString());
-  // console.log(ethers.formatEther("1010000000000000000"));
+
+  const buyItem = async (item) => {
+    await (
+      await marketplace.purchaseItem(item.itemId, {
+        value: item.totalPrice,
+      })
+    ).wait();
+    loadMarketplaceItems();
+  };
 
   useEffect(() => {
     loadMarketplaceItems();
@@ -57,7 +62,7 @@ export function Home({ marketplace, nft }) {
   return (
     <div>
       {NFTs.length > 0 ? (
-        <ListItems itemsArray={NFTs} />
+        <ListItems itemsArray={NFTs} isHomePage={true} buyItem={buyItem} />
       ) : (
         <main style={{ padding: "1rem 0" }}>
           <h2>No listed assets</h2>

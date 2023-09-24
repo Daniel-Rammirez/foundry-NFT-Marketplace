@@ -29,7 +29,7 @@ export function Listings({ marketplace, nft, account }) {
     /* eslint-disable react/prop-types */
     const itemCount = await marketplace.itemCount();
     for (let indx = 1; indx <= itemCount; indx++) {
-      console.log(indx);
+      // console.log(indx);
       // Get the NFT info for that id
       const nftItem = await marketplace.items(indx);
       // console.log("account: ", account);
@@ -41,7 +41,7 @@ export function Listings({ marketplace, nft, account }) {
       const response = await fetch(nftUri);
       // Transform to json
       const metadata = await response.json();
-      console.log(metadata);
+      // console.log(metadata);
       // Get totalPrice
       const totalPrice = await marketplace.getTotalPrice(nftItem.itemId);
       // Create item and add it to array
@@ -62,7 +62,7 @@ export function Listings({ marketplace, nft, account }) {
     setSoldNFT(soldItems);
     setLoading(false);
   }
-  console.log(listedNFT);
+  // console.log(listedNFT);
 
   useEffect(() => {
     loadListedItems();
@@ -80,8 +80,8 @@ export function Listings({ marketplace, nft, account }) {
     <div>
       {listedNFT.length > 0 ? (
         <>
-          <h2 className="text-2xl my-4">Listed Items</h2>
-          <ListItems itemsArray={listedNFT} />
+          <h2 className="text-2xl my-4">My Listed Items</h2>
+          <ListItems itemsArray={listedNFT} isHomePage={false} />
           <div>
             <SoldItems soldNFT={soldNFT} />
           </div>

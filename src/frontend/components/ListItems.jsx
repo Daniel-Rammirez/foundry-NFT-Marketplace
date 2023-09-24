@@ -3,7 +3,7 @@
 import { ethers } from "ethers";
 
 /* eslint-disable react/prop-types */
-export function ListItems({ itemsArray }) {
+export function ListItems({ itemsArray, isHomePage, buyItem }) {
   return (
     <ul className="flex flex-row gap-4 mx-4 my-4">
       {itemsArray.map((NFT) => {
@@ -28,14 +28,20 @@ export function ListItems({ itemsArray }) {
 
                 <div className="flex items-center justify-between">
                   <span className="text-3xl font-bold text-gray-900 dark:text-white">
-                    ${ethers.formatEther(NFT.totalPrice.toString())}
+                    {ethers.formatEther(NFT.totalPrice.toString())} ETH
                   </span>
-                  <a
-                    href="#"
-                    className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                  >
-                    Buy
-                  </a>
+                  {isHomePage ? (
+                    <button
+                      onClick={() => buyItem(NFT)}
+                      className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    >
+                      Buy
+                    </button>
+                  ) : (
+                    <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                      Cancel
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
