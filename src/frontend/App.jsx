@@ -84,7 +84,16 @@ function App() {
               <Listings marketplace={marketplace} nft={nft} account={account} />
             }
           />
-          <Route path="/Purchases" element={<Purchases />} />
+          <Route
+            path="/Purchases"
+            element={
+              <Purchases
+                marketplace={marketplace}
+                nft={nft}
+                account={account}
+              />
+            }
+          />
         </Routes>
       )}
     </>

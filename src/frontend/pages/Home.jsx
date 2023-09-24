@@ -11,29 +11,31 @@ export function Home({ marketplace, nft }) {
   const loadMarketplaceItems = async () => {
     // Load all unsold items
     const itemCount = await marketplace.itemCount();
+    console.log(itemCount);
     const items = [];
     for (let i = 1; i <= itemCount; i++) {
       const item = await marketplace.items(i);
-      if (item.sold) return;
-      // Get URI URL from nft Contract
-      const uri = await nft.tokenURI(item.tokenId);
-      // console.log(uri);
-      // Use uri to fetch the nft metadata stored on ipfs
-      const response = await fetch(uri);
-      const metadata = await response.json();
-      // console.log(metadata);
-      // Get total price of item (item price + fee)
-      const totalPrice = await marketplace.getTotalPrice(item.itemId);
-      // const totalPrice = Number(totalPriceData);
-      // Add item to items array
-      items.push({
-        totalPrice: totalPrice,
-        itemId: item.itemId,
-        seller: item.seller,
-        name: metadata.NFT_name,
-        description: metadata.NFT_description,
-        image: metadata.NFT_image,
-      });
+      console.log(item);
+      if (!item.sold) {
+        // Get URI URL from nft Contract
+        const uri = await nft.tokenURI(item.tokenId);
+        // console.log(uri);
+        // Use uri to fetch the nft metadata stored on ipfs
+        const response = await fetch(uri);
+        const metadata = await response.json();
+        // console.log(metadata);
+        // Get total price of item (item price + fee)
+        const totalPrice = await marketplace.getTotalPrice(item.itemId);
+        // Add item to items array
+        items.push({
+          totalPrice: totalPrice,
+          itemId: item.itemId,
+          seller: item.seller,
+          name: metadata.NFT_name,
+          description: metadata.NFT_description,
+          image: metadata.NFT_image,
+        });
+      }
     }
     setLoading(false);
     setNFTs(items);
@@ -47,6 +49,7 @@ export function Home({ marketplace, nft }) {
     ).wait();
     loadMarketplaceItems();
   };
+  console.log(NFTs);
 
   useEffect(() => {
     loadMarketplaceItems();

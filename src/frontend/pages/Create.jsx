@@ -58,7 +58,7 @@ export function Create({ marketplace, nft }) {
       const result = await client.add(
         JSON.stringify({ NFT_image, NFT_price, NFT_name, NFT_description })
       );
-      console.log(result);
+      console.log("NFT created! ", result);
       mintThenList(result);
     } catch (error) {
       console.log("ipfs uri upload error: ", error);
@@ -72,13 +72,10 @@ export function Create({ marketplace, nft }) {
     // get tokenId of new nft
     const id = await nft.tokenCount();
     // approve marketplace to spend nft
-    console.log("aca no llega ", marketplace.target);
     await (await nft.setApprovalForAll(marketplace.target, true)).wait();
     // add nft to marketplace
     const NFT_price = data.price;
-    console.log(NFT_price);
     const listingPrice = ethers.parseEther(NFT_price.toString());
-    console.log(listingPrice);
     await (await marketplace.makeItem(nft.target, id, listingPrice)).wait();
   };
 

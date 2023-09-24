@@ -29,33 +29,33 @@ export function Listings({ marketplace, nft, account }) {
     /* eslint-disable react/prop-types */
     const itemCount = await marketplace.itemCount();
     for (let indx = 1; indx <= itemCount; indx++) {
-      // console.log(indx);
       // Get the NFT info for that id
       const nftItem = await marketplace.items(indx);
       // console.log("account: ", account);
       // Verify the NFT owner
-      if (nftItem.seller.toLowerCase() !== account) return;
-      // Get NFT uri
-      const nftUri = await nft.tokenURI(nftItem.tokenId);
-      // fetch to get the response
-      const response = await fetch(nftUri);
-      // Transform to json
-      const metadata = await response.json();
-      // console.log(metadata);
-      // Get totalPrice
-      const totalPrice = await marketplace.getTotalPrice(nftItem.itemId);
-      // Create item and add it to array
-      let item = {
-        totalPrice: totalPrice,
-        name: metadata.NFT_name,
-        description: metadata.NFT_description,
-        image: metadata.NFT_image,
-        price: metadata.price,
-        itemId: nftItem.itemId,
-      };
-      listedItems.push(item);
-      // And if is sold, add it to the other array too
-      if (nftItem.sold) soldItems.push(item);
+      if (nftItem.seller.toLowerCase() == account) {
+        // Get NFT uri
+        const nftUri = await nft.tokenURI(nftItem.tokenId);
+        // fetch to get the response
+        const response = await fetch(nftUri);
+        // Transform to json
+        const metadata = await response.json();
+        // console.log(metadata);
+        // Get totalPrice
+        const totalPrice = await marketplace.getTotalPrice(nftItem.itemId);
+        // Create item and add it to array
+        let item = {
+          totalPrice: totalPrice,
+          name: metadata.NFT_name,
+          description: metadata.NFT_description,
+          image: metadata.NFT_image,
+          price: metadata.price,
+          itemId: nftItem.itemId,
+        };
+        listedItems.push(item);
+        if (nftItem.sold) soldItems.push(item);
+        // And if is sold, add it to the other array too
+      }
     }
     // Set both states with the final items arrays
     setListedNFT(listedItems);
@@ -78,7 +78,7 @@ export function Listings({ marketplace, nft, account }) {
 
   return (
     <div>
-      {listedNFT.length > 0 ? (
+      {listedNFT.length > 0 || soldNFT.length ? (
         <>
           <h2 className="text-2xl my-4">My Listed Items</h2>
           <ListItems itemsArray={listedNFT} isHomePage={false} />
