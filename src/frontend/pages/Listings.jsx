@@ -52,8 +52,12 @@ export function Listings({ marketplace, nft, account }) {
           price: metadata.NFT_price,
           itemId: nftItem.itemId,
         };
-        listedItems.push(item);
-        if (nftItem.sold) soldItems.push(item);
+        // listedItems.push(item);
+        if (nftItem.sold) {
+          soldItems.push(item);
+        } else {
+          listedItems.push(item);
+        }
         // And if is sold, add it to the other array too
       }
     }
