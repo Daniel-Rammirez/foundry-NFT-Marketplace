@@ -57,7 +57,7 @@ export function ListItems({ itemsArray, sold, buyItem }) {
           <li key={NFT.itemId}>
             <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
               <img
-                className="p-8 rounded-t-lg object-contain h-96 w-96"
+                className="p-8 rounded-t-lg object-contain h-64 w-80"
                 src={NFT.image}
                 alt={`image of ${NFT.name}`}
               />
