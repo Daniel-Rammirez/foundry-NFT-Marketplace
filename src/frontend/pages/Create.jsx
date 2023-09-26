@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Buffer } from "buffer";
 import { ethers } from "ethers";
 import { create } from "ipfs-http-client";
+import { useNavigate } from "react-router-dom";
 
 const REACT_APP_API_KEY = "2VBl0610uzMx4lxoP5NDgrIqcdQ";
 const REACT_APP_API_KEY_SECRET = "a5cca43e3b4e6cd5ea1c29ffa7d6135b";
@@ -25,6 +26,7 @@ const client = create({
 
 /* eslint-disable react/prop-types */
 export function Create({ marketplace, nft }) {
+  const navigate = useNavigate();
   const [data, setData] = useState({
     image: "",
     name: "",
@@ -77,13 +79,17 @@ export function Create({ marketplace, nft }) {
     const NFT_price = data.price;
     const listingPrice = ethers.parseEther(NFT_price.toString());
     await (await marketplace.makeItem(nft.target, id, listingPrice)).wait();
+    navigate("/");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // const { jsonMetadata } = await loadImage(data);
-    // console.log(jsonMetadata);
-    createNFT();
+    if (!data.image || !data.price || !data.name || !data.description) return;
+    try {
+      createNFT();
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const handleChange = (event) => {
@@ -93,45 +99,50 @@ export function Create({ marketplace, nft }) {
   // console.log(data);
 
   return (
-    <>
-      <h1>Create NFT</h1>
-      <form className="px-4 py-3 rounded-full" onSubmit={handleSubmit}>
+    <div className="flex justify-center">
+      {/* <p className="text-2xl">Create NFT</p> */}
+      <form
+        className="border w-96 rounded-lg px-4 py-3 flex flex-col gap-3 m-4 justify-center"
+        onSubmit={handleSubmit}
+      >
         <section className="form-input">
           <input type="file" onChange={uploadToIPFS} />
         </section>
-        <section className="rounded text-pink-500">
+        <section className="text-500 text-2xl">
           <label>Name</label>
-          <input
-            className="rounded text-pink-500"
-            autoComplete="off"
-            name="name"
-            value={data.name}
-            onChange={handleChange}
-            type="text"
-          />
         </section>
-        <section className="form-input">
+        <input
+          className="rounded-lg h-8"
+          autoComplete="off"
+          name="name"
+          value={data.name}
+          onChange={handleChange}
+          type="text"
+        />
+        <section className="form-input text-2xl">
           <label>Description</label>
-          <input
-            autoComplete="off"
-            name="description"
-            value={data.description}
-            onChange={handleChange}
-            type="text"
-          />
         </section>
-        <section className="form-input">
+        <textarea
+          className="rounded-lg"
+          autoComplete="off"
+          name="description"
+          value={data.description}
+          onChange={handleChange}
+          type="text"
+        />
+        <section className="form-input text-2xl">
           <label>ETH price</label>
-          <input
-            autoComplete="off"
-            name="price"
-            value={data.price}
-            onChange={handleChange}
-            type="number"
-          />
         </section>
+        <input
+          className="rounded-lg h-8"
+          autoComplete="off"
+          name="price"
+          value={data.price}
+          onChange={handleChange}
+          type="number"
+        />
         <button>Create NFT</button>
       </form>
-    </>
+    </div>
   );
 }

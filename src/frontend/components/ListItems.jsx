@@ -51,7 +51,7 @@ const FooterCard = ({ sold, NFT, buyItem }) => {
 
 export function ListItems({ itemsArray, sold, buyItem }) {
   return (
-    <ul className="flex flex-row gap-4 mx-4 my-4">
+    <ul className="flex flex-row gap-4 mx-4 my-4 flex-wrap">
       {itemsArray.map((NFT) => {
         return (
           <li key={NFT.itemId}>
