@@ -66,7 +66,8 @@ export function Listings({ marketplace, nft, account }) {
     setSoldNFT(soldItems);
     setLoading(false);
   }
-  // console.log(listedNFT);
+
+  const deleteNFT = () => {}; //TODO: a function that delete an NFT from user account
 
   useEffect(() => {
     loadListedItems();
@@ -85,7 +86,11 @@ export function Listings({ marketplace, nft, account }) {
       {listedNFT.length > 0 || soldNFT.length ? (
         <>
           <h2 className="text-2xl my-4">My Listed Items</h2>
-          <ListItems itemsArray={listedNFT} isHomePage={false} />
+          <ListItems
+            itemsArray={listedNFT}
+            isHomePage={false}
+            deleteNFT={deleteNFT}
+          />
           <div>
             <SoldItems soldNFT={soldNFT} />
           </div>

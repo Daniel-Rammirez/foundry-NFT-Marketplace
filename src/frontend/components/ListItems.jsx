@@ -4,7 +4,7 @@ import { ethers } from "ethers";
 
 /* eslint-disable react/prop-types */
 
-const FooterCard = ({ sold, NFT, buyItem }) => {
+const FooterCard = ({ sold, NFT, buyItem, deleteNFT }) => {
   const location = useLocation();
   const currentPath = location.pathname;
   if (currentPath == "/Listings") {
@@ -20,7 +20,10 @@ const FooterCard = ({ sold, NFT, buyItem }) => {
           <span className="text-3xl font-bold text-gray-900 dark:text-white">
             {ethers.formatEther(NFT.totalPrice.toString())} ETH
           </span>
-          <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          <button
+            onClick={() => deleteNFT(NFT)}
+            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
             Cancel
           </button>
         </>
@@ -49,7 +52,7 @@ const FooterCard = ({ sold, NFT, buyItem }) => {
   }
 };
 
-export function ListItems({ itemsArray, sold, buyItem }) {
+export function ListItems({ itemsArray, sold, buyItem, deleteNFT }) {
   return (
     <ul className="flex flex-row gap-4 mx-4 my-4 flex-wrap">
       {itemsArray.map((NFT) => {
@@ -71,7 +74,12 @@ export function ListItems({ itemsArray, sold, buyItem }) {
                 </p>
 
                 <div className="flex items-center justify-between">
-                  <FooterCard NFT={NFT} sold={sold} buyItem={buyItem} />
+                  <FooterCard
+                    NFT={NFT}
+                    sold={sold}
+                    buyItem={buyItem}
+                    deleteNFT={deleteNFT}
+                  />
                 </div>
               </div>
             </div>
