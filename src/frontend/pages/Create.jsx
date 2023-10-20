@@ -112,7 +112,7 @@ export function Create({ marketplace, nft }) {
           <label>Name</label>
         </section>
         <input
-          className="rounded-lg h-8"
+          className="rounded-lg h-8 pl-2"
           autoComplete="off"
           name="name"
           value={data.name}
@@ -123,7 +123,7 @@ export function Create({ marketplace, nft }) {
           <label>Description</label>
         </section>
         <textarea
-          className="rounded-lg"
+          className="rounded-lg pl-2"
           autoComplete="off"
           name="description"
           value={data.description}
@@ -134,7 +134,7 @@ export function Create({ marketplace, nft }) {
           <label>ETH price</label>
         </section>
         <input
-          className="rounded-lg h-8"
+          className="rounded-lg h-8 pl-2"
           autoComplete="off"
           name="price"
           value={data.price}

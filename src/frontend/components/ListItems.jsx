@@ -60,7 +60,7 @@ export function ListItems({ itemsArray, sold, buyItem, deleteNFT }) {
           <li key={NFT.itemId}>
             <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
               <img
-                className="p-8 rounded-t-lg object-contain h-64 w-80"
+                className="p-8 rounded-t-lg object-contain h-64 w-80 mx-auto"
                 src={NFT.image}
                 alt={`image of ${NFT.name}`}
               />
@@ -70,10 +70,10 @@ export function ListItems({ itemsArray, sold, buyItem, deleteNFT }) {
                   {NFT.name}
                 </h5>
                 <p className=" tracking-tight text-gray-500 dark:text-white">
-                  {NFT.description}
+                  {NFT.description.split("").slice(0, 40).join("") + "..."}
                 </p>
 
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between mt-8">
                   <FooterCard
                     NFT={NFT}
                     sold={sold}

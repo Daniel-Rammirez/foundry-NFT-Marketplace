@@ -17,7 +17,6 @@ const SoldItems = ({ soldNFT }) => {
   );
 };
 
-/* eslint-disable react/prop-types */
 export function Listings({ marketplace, nft, account }) {
   const [loading, setLoading] = useState(true);
   const [listedNFT, setListedNFT] = useState([]);
@@ -26,7 +25,7 @@ export function Listings({ marketplace, nft, account }) {
   async function loadListedItems() {
     const listedItems = [];
     const soldItems = [];
-    /* eslint-disable react/prop-types */
+
     const itemCount = await marketplace.itemCount();
     for (let indx = 1; indx <= itemCount; indx++) {
       // Get the NFT info for that id

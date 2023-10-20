@@ -21,6 +21,7 @@ export function Home({ marketplace, nft }) {
         const uri = await nft.tokenURI(item.tokenId);
         // console.log(uri);
         // Use uri to fetch the nft metadata stored on ipfs
+        // https://nmarketplace.infura-ipfs.io/ipfs/${}
         const response = await fetch(uri);
         const metadata = await response.json();
         // console.log(metadata);
